@@ -29,34 +29,34 @@ lib
 └── src...........................................| Raíz
     ├── app_module.dart
     ├── app_widget.dart
-    ├── features..................................| Funcionalidades do projeto
-    │   ├── auth..................................| FEATURE - autenticação
+    ├── features..................................| Funcionalidades da aplicação
+    │   ├── auth..................................| FEATURE - pagina de autenticação
     │   │   ├── auth_module.dart
     │   │   ├── data
-    │   │   │   ├── dto...........................| Mapeamento de dados para repository (define padrão para entrada e saída de dados)
+    │   │   │   ├── dto...........................| Mapeamento de dados para repository (padrão de dados para entrada e saída)
     │   │   │   │   └── user_dto.dart
     │   │   │   └── repository....................| Comunicação externa
     │   │   │       └── login_repository.dart
     │   │   ├── domain
-    │   │   │   ├── model.........................| Mapeamento de dados para a aplicação
+    │   │   │   ├── model.........................| Mapeamento de dados para a parte interna da aplicação
     │   │   │   │   └── user.dart
-    │   │   │   ├── repository
+    │   │   │   ├── repository....................| Lógica/Criação das estruturas de lógica de negócio
     │   │   │   │   └── login_interface.dart
-    │   │   │   └── usecase
+    │   │   │   └── usecase.......................| Validação e formatação de dados para serem apresentados para o usuário
     │   │   │       └── login_usecase.dart
     │   │   └── presentation......................| Telas de apresentação da feature auth
-    │   │       ├── view..........................| Telas do app
+    │   │       ├── view
     │   │       │   ├── page
     │   │       │   │   └── login_page.dart
-    │   │       │   └── widget....................| Componentes das telas do app
-    │   │       └── viewmodel
+    │   │       │   └── widget....................| Componentes das telas da feature auth
+    │   │       └── viewmodel.....................| Camada de recepção dos dados (entrada do usuário)
     │   │           ├── login_viewmodel.dart
     │   │           └── login_viewmodel.g.dart
-    │   ├── onboarding
+    │   ├── onboarding............................| Telas iniciais antes de fazer login
     │   │   └── presentation
     │   │       ├── page
     │   │       └── widget
-    │   └── sign_up...............................| Feature - criar conta
+    │   └── sign_up...............................| FEATURE - pagina para criar conta
     └── main.dart.................................| Entrypoint - primeiro arquivo a ser chamado
 
 ```

@@ -39,11 +39,27 @@ mixin _$LoginViewModel on _LoginViewModelBase, Store {
     });
   }
 
+  final _$isLoggedAtom = Atom(name: '_LoginViewModelBase.isLogged');
+
+  @override
+  bool get isLogged {
+    _$isLoggedAtom.reportRead();
+    return super.isLogged;
+  }
+
+  @override
+  set isLogged(bool value) {
+    _$isLoggedAtom.reportWrite(value, super.isLogged, () {
+      super.isLogged = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 username: ${username},
-password: ${password}
+password: ${password},
+isLogged: ${isLogged}
     ''';
   }
 }

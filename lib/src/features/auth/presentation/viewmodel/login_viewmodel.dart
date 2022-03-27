@@ -10,20 +10,32 @@ class LoginViewModel = _LoginViewModelBase with _$LoginViewModel;
 abstract class _LoginViewModelBase with Store {
   final _usecase = Modular.get<LoginUseCase>();
 
+  // flutter pub run build_runner build
+
   @observable
   String username = '';
 
   @observable
   String password = '';
+  
+  @observable
+  bool isLogged = false;
 
   void login() async {
     //TODO: Validate username
     //TODO: Validate password
 
     try {
-      await _usecase.login(username, password);
-    } on UnimplementedError {
-      print('Put the error message in an observable instance field.');
+      final user_info = await _usecase.login(username, password);
+      if (user_info.password == password && user_info.username == username) {
+        isLogged = true;
+        print('Login ok!');
+      } else {
+        isLogged = false;
+        print('Login inválido!');
+      }
+    } on Exception {
+      print('Login inválido!');
     }
   }
 }
