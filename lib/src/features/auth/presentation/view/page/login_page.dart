@@ -16,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
 
   String email = '';
   String password = '';
+  bool passwordIsObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -54,12 +55,22 @@ class _LoginPageState extends State<LoginPage> {
                       child: SizedBox(
                         width: CustomSizeConfig().widthPercentage(context, 0.7),
                         child: TextField(
+                          obscureText: passwordIsObscure,
                           onChanged: (input) {
                             password = input;
                           },
-                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
-                              labelText: 'Senha', border: OutlineInputBorder()),
+                              labelText: 'Senha',
+                              border: OutlineInputBorder(),
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      passwordIsObscure = !passwordIsObscure;
+                                    });
+                                  },
+                                  icon: Icon(passwordIsObscure
+                                      ? Icons.visibility
+                                      : Icons.visibility_off))),
                         ),
                       ),
                     ),
