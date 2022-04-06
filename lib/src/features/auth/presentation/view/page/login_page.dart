@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../utils/base_widgets/material_button.dart';
+import '../../../../utils/base_widgets/text_input.dart';
+import '../../../../utils/base_widgets/text_with_button_redirect.dart';
+
 import '../../viewmodel/login_viewmodel.dart';
-import '../../../../utils/utils.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -11,101 +15,115 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
+
 class _LoginPageState extends State<LoginPage> {
   final _viewModel = Modular.get<LoginViewModel>();
+  bool obscureText = true;
 
-  String email = '';
-  String password = '';
-  bool passwordIsObscure = true;
+  hideShowIconButton(){
+    return IconButton(
+      onPressed: () {
+          setState(() {
+            obscureText = !obscureText;
+          });
+      },
+      icon: Icon(
+        obscureText ? Icons.visibility_off :  Icons.visibility)
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Login')),
-        body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          color: Colors.blueGrey[50],
-          child: SingleChildScrollView(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
                   children: [
-                    Container(
-                      child: SizedBox(
-                        width: CustomSizeConfig().widthPercentage(context, 0.7),
-                        child: TextField(
-                          onChanged: (input) {
-                            email = input;
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                              labelText: 'Email', border: OutlineInputBorder()),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 10,
-                    ),
-                    Container(
-                      child: SizedBox(
-                        width: CustomSizeConfig().widthPercentage(context, 0.7),
-                        child: TextField(
-                          obscureText: passwordIsObscure,
-                          onChanged: (input) {
-                            password = input;
-                          },
-                          decoration: InputDecoration(
-                              labelText: 'Senha',
-                              border: OutlineInputBorder(),
-                              suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      passwordIsObscure = !passwordIsObscure;
-                                    });
-                                  },
-                                  icon: Icon(passwordIsObscure
-                                      ? Icons.visibility
-                                      : Icons.visibility_off))),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 15,
-                    ),
-                    SizedBox(
-                        width: CustomSizeConfig().widthPercentage(context, 0.7),
-                        height: 50,
-                        child: TextButton(
-                          onPressed: () {
-                            _viewModel.username = email;
-                            _viewModel.password = password;
-                            _viewModel.login();
-                            if (_viewModel.isLogged) {
-                              print('login ok');
-                              Navigator.of(context)
-                                  .pushReplacementNamed('/home/');
-                            }
-                          },
-                          child: Text(
-                            'Entrar',
-                            style: TextStyle(color: Colors.white),
+                    const SizedBox(height: 120),
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: const [
+                          Text (
+                            "Entrar", 
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          style: TextButton.styleFrom(
-                              backgroundColor:
-                                  Color.fromARGB(255, 37, 161, 243),
-                              padding: EdgeInsets.all(0),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap),
-                        ))
+                          SizedBox(height: 20),
+                          Text(
+                            "Fit Works",
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Color.fromARGB(255, 142, 130, 130),
+                              ),
+                          ),
+                        ],
+                    ),
+                    const SizedBox(height: 30),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          customTextInput(
+                            textLabel: 'Email',
+                            textFieldController: _viewModel.usernameController,
+                          ),
+                          const SizedBox(height: 30),
+                          customTextInput(
+                            textLabel: 'Senha',
+                            textFieldController: _viewModel.passwordController,
+                            obscureText: obscureText,
+                            suffixIcon: hideShowIconButton()
+                          ),
+                          const SizedBox(height: 30),
+                          customMaterialButton(
+                            labelText: 'Entrar',
+                            onPressed: () {
+                              setState(() {
+                                  _viewModel.username = _viewModel.usernameController.text;
+                                  _viewModel.password = _viewModel.passwordController.text;
+                                  _viewModel.login();
+                                  if (_viewModel.isLogged) {
+                                    Navigator.of(context).pushReplacementNamed('/home/');
+                                  }
+                              });
+                            } 
+                          ),
+                          const SizedBox(height: 30),
+                          textWithButtonRedirect(
+                            labelTextButton: "Cadastre-se",
+                            labelTextDescription: "Ainda não possui conta?",
+                            onPressed: () {
+                                Navigator.of(context).pushReplacementNamed('/sign-up/');
+                            }
+                          ),
+                          const SizedBox(width: 10),
+                          textWithButtonRedirect(
+                            labelTextButton: "Esqueci minha senha",
+                            onPressed: () {
+                                Navigator.of(context).pushReplacementNamed('/pwd-recovery/');
+                            }
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              ),
-            ),
+              ]
+           ),
           ),
-        ));
+        )
+      )
+    );
   }
 }

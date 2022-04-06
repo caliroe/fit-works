@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../domain/usecase/login_usecase.dart';
@@ -21,13 +22,16 @@ abstract class _LoginViewModelBase with Store {
   @observable
   bool isLogged = false;
 
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   void login() async {
     //TODO: Validate username
     //TODO: Validate password
 
     try {
-      final user_info = await _usecase.login(username, password);
-      if (user_info.password == password && user_info.username == username) {
+      final userInfo = await _usecase.login(username, password);
+      if (userInfo.password == password && userInfo.username == username) {
         isLogged = true;
         print('Login ok!');
       } else {

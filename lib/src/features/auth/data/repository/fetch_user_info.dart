@@ -5,5 +5,7 @@ Future<User> fetchUser(User user) async {
     String password = '123';
 
     // bater na api e verificar usuário
+    // # https://pub.dev/packages/dio  (lib de request)
+
     return User(username, password);
   }
