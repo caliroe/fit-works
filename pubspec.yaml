@@ -20,6 +20,10 @@ dependencies:
   flutter_svg: ^1.0.3
   mobx: ^2.0.6+1
   flutter_mobx: ^2.0.4
+  mask_text_input_formatter: ^2.1.0
+  dio: ^4.0.6
+  email_validator: "0.1.4"
+  get: "4.6.1"
 
 dev_dependencies:
   flutter_test:
@@ -37,5 +41,32 @@ flutter:
     - lib/assets/
     - lib/assets/i18n/
     - lib/assets/images/
+
+  fonts:
+    - family: Fredoka One
+      fonts:
+        - asset: lib/assets/fonts/FredokaOne-Regular.ttf
+
+    - family: Kanit
+      fonts:
+        - asset: lib/assets/fonts/Kanit-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/Kanit-Black.ttf
+          weight: 400
+        - asset: lib/assets/fonts/Kanit-BlackItalic.ttf
+          weight: 400
+          style: italic
+  
+    - family: Ubuntu
+      fonts:
+        - asset: lib/assets/fonts/Ubuntu-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/Ubuntu-Regular.ttf
+          weight: 500
+        - asset: lib/assets/fonts/Ubuntu-Regular.ttf
+          weight: 400
+        - asset: lib/assets/fonts/Ubuntu-BoldItalic.ttf
+          weight: 700
+          style: italic
 
 

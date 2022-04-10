@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:basearch/src/common/form_text_field.dart';
+import 'package:localization/localization.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
-import '../../../../utils/base_widgets/material_button.dart';
-import '../../../../utils/base_widgets/text_input.dart';
-import '../../../../utils/base_widgets/text_with_button_redirect.dart';
-
+import '../../../../../common/text_button_with_redirect.dart';
 import '../../viewmodel/login_viewmodel.dart';
+import '../../../../../app_widget.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -16,9 +17,10 @@ class LoginPage extends StatefulWidget {
 }
 
 
-class _LoginPageState extends State<LoginPage> {
-  final _viewModel = Modular.get<LoginViewModel>();
+class _LoginPageState extends ModularState<LoginPage, LoginViewModel> {
   bool obscureText = true;
+  Locale selectLocale = const Locale('pt', 'BR');
+
 
   hideShowIconButton(){
     return IconButton(
@@ -31,99 +33,166 @@ class _LoginPageState extends State<LoginPage> {
         obscureText ? Icons.visibility_off :  Icons.visibility)
     );
   }
+  
+
+  pageTitle(String labelTextTitle, String labelTextDescription){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Text(
+          labelTextTitle,
+          style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          labelTextDescription,
+          style: const TextStyle(
+              fontSize: 15,
+              color: Color.fromARGB(255, 142, 130, 130),
+          ),
+        )
+      ],
+    );
+  }
+
+
+
+  Widget get _username => widget.createFormField(
+        textLabel: 'username'.i18n(),
+        theme: ThemeData(),
+        keyboardType: TextInputType.emailAddress,
+        textInputAction: TextInputAction.next,
+        hint: 'username'.i18n(),
+        enabled: !store.isLoading,
+        errorText: store.error.username,
+        onChange: (value) => store.username = value,
+      );
+
+  Widget get _password => widget.createFormField(
+        textLabel: 'password'.i18n(),
+        theme: ThemeData(),
+        keyboardType: TextInputType.text,
+        obscureText: obscureText,
+        hint: 'password'.i18n(),
+        enabled: !store.isLoading,
+        errorText: store.error.password,
+        onChange: (value) => store.password = value,
+        suffixIcon: hideShowIconButton()
+      );
+
+  Widget get _loginButton => Container(
+        margin: const EdgeInsets.fromLTRB(30, 15, 30, 5),
+        width: double.infinity,
+        height: 56,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6),
+              ),
+            ),
+          ),
+          onPressed: () {
+              if(!store.isLoading) {
+                store.login();
+                Future.delayed(const Duration(seconds: 5)).then((_) {
+                  if(store.isLogged) {
+                    Navigator.pop(context);
+                    Modular.to.pushNamed('/home/');    
+                  }
+                });
+              } 
+            },
+          child: Text('sign_in'.i18n()),
+        ),
+      );
+
+  Widget get _localeButton => DropdownButton(
+        value: selectLocale,
+        items: const [
+            DropdownMenuItem(
+              child: Text("en - US"),
+              value: Locale('en', 'US')
+            ),
+            DropdownMenuItem(
+              child: Text("pt - BR"),
+              value: Locale('pt', 'BR'),
+            )
+        ],
+        onChanged: (value){
+          setState(() {
+            if (selectLocale.toLanguageTag() == 'pt-BR'){
+              selectLocale = const Locale('en', 'US');
+            } else {
+              selectLocale = const Locale('pt', 'BR');
+            }
+            AppWidget.setLocale(context, selectLocale);
+          });
+        },
+    );
+
+  Widget get _signUp => widget.createTextWithButtonRedirect(
+        labelTextButton: "sign_up".i18n(),
+        labelTextDescription: "without_account".i18n(),
+        onPressed: () {
+            Modular.to.pushNamed('/sign-up/');
+        }
+  );
+  
+  Widget get _forgotPassword => widget.createTextWithButtonRedirect(
+        labelTextButton: "forgot_password".i18n(),
+        onPressed: () {
+            Modular.to.pushNamed('/pwd-recovery/');
+        }
+  );
+
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body: SafeArea(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        actions: [
+          _localeButton
+        ],
+      ),
+      body: Center(
         child: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: double.infinity,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  children: [
-                    const SizedBox(height: 120),
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
-                          Text (
-                            "Entrar", 
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Text(
-                            "Fit Works",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Color.fromARGB(255, 142, 130, 130),
-                              ),
-                          ),
-                        ],
-                    ),
-                    const SizedBox(height: 30),
-                    Padding(
+                Observer(builder: (_) {
+                  return Form(
+                    child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 50),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          customTextInput(
-                            textLabel: 'Email',
-                            textFieldController: _viewModel.usernameController,
-                          ),
-                          const SizedBox(height: 30),
-                          customTextInput(
-                            textLabel: 'Senha',
-                            textFieldController: _viewModel.passwordController,
-                            obscureText: obscureText,
-                            suffixIcon: hideShowIconButton()
-                          ),
-                          const SizedBox(height: 30),
-                          customMaterialButton(
-                            labelText: 'Entrar',
-                            onPressed: () {
-                              setState(() {
-                                  _viewModel.username = _viewModel.usernameController.text;
-                                  _viewModel.password = _viewModel.passwordController.text;
-                                  _viewModel.login();
-                                  if (_viewModel.isLogged) {
-                                    Navigator.of(context).pushReplacementNamed('/home/');
-                                  }
-                              });
-                            } 
-                          ),
-                          const SizedBox(height: 30),
-                          textWithButtonRedirect(
-                            labelTextButton: "Cadastre-se",
-                            labelTextDescription: "Ainda não possui conta?",
-                            onPressed: () {
-                                Navigator.of(context).pushReplacementNamed('/sign-up/');
-                            }
-                          ),
-                          const SizedBox(width: 10),
-                          textWithButtonRedirect(
-                            labelTextButton: "Esqueci minha senha",
-                            onPressed: () {
-                                Navigator.of(context).pushReplacementNamed('/pwd-recovery/');
-                            }
-                          ),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [                        
+                            pageTitle('app_name'.i18n(), 'sign_in'.i18n()),
+                            const SizedBox(height: 20),
+                            _username,
+                            _password,
+                            _loginButton,
+                            const SizedBox(height: 50),
+                            _signUp,
+                            const SizedBox(height: 10),
+                            _forgotPassword
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ]
-           ),
+                  );
+                }),
+              ],
+            ),
           ),
-        )
-      )
+      ),
+      
     );
   }
 }
