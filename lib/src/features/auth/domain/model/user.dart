@@ -1,14 +1,13 @@
+
+
 class User {
+  const User(this.username, this.password, {this.token});
+  
   final String username;
   final String password;
+  final String? token;
 
-  const User(this.username, this.password);
-  
-  static User getUser() {
-    User user = const User(
-        'gabriel@iesb.edu',
-        '123');
 
-    return user;
-  }
+  factory User.fromJson(Map<String, dynamic> json) =>
+    User(json['username'], json['password'], token: json['token']);
 }

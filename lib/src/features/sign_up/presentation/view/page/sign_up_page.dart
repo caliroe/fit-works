@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
+import 'package:basearch/src/common/form_text_field.dart';
 
-import '../../../../utils/base_widgets/material_button.dart';
-import '../../../../utils/base_widgets/text_input.dart';
-import '../../../../utils/base_widgets/text_with_button_redirect.dart';
 
 
 class SignUpPage extends StatefulWidget {
@@ -14,11 +13,6 @@ class SignUpPage extends StatefulWidget {
 
 
 class _SignUpPageState extends State<SignUpPage> {
-
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-
   bool obscureText = true;
 
 
@@ -34,6 +28,81 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  pageTitle(String labelTextTitle, String labelTextDescription){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Text(
+          labelTextTitle,
+          style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          labelTextDescription,
+          style: const TextStyle(
+              fontSize: 15,
+              color: Color.fromARGB(255, 142, 130, 130),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget get _username => widget.createFormField(
+        textLabel: 'username'.i18n(),
+        theme: ThemeData(),
+        keyboardType: TextInputType.emailAddress,
+        textInputAction: TextInputAction.next,
+        hint: 'username'.i18n(),
+        enabled: true, // !store.isLoading,
+        errorText: '', // store.error.username,
+        onChange: (value) => null // store.username = value,
+      );
+
+  Widget get _password => widget.createFormField(
+        textLabel: 'password'.i18n(),
+        theme: ThemeData(),
+        keyboardType: TextInputType.text,
+        obscureText: obscureText,
+        hint: 'password'.i18n(),
+        enabled: true, // !store.isLoading,
+        errorText: '', // store.error.password,
+        onChange: (value) => null, // store.password = value,
+        suffixIcon: hideShowIconButton()
+      );
+  
+  Widget get _confirmPassword => widget.createFormField(
+        textLabel: 'password_comfirm'.i18n(),
+        theme: ThemeData(),
+        keyboardType: TextInputType.text,
+        obscureText: obscureText,
+        hint: 'password_comfirm'.i18n(),
+        enabled: true, // !store.isLoading,
+        errorText: '', // store.error.password,
+        onChange: (value) => null, // store.password = value,
+        suffixIcon: hideShowIconButton()
+      );
+  
+   Widget get _signUpButton => Container(
+        margin: const EdgeInsets.fromLTRB(30, 15, 30, 5),
+        width: double.infinity,
+        height: 56,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6),
+              ),
+            ),
+          ),
+          onPressed: null,
+          child: Text('sign_up'.i18n()),
+        ),
+      );
+  
 
   @override
   Widget build(BuildContext context) {
@@ -53,86 +122,25 @@ class _SignUpPageState extends State<SignUpPage> {
             color: Colors.black)
         ),
       ),
-      body: SafeArea(
+      body: Center(
         child: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    pageTitle('sign_up'.i18n(), 'create_account'.i18n()),
                     const SizedBox(height: 30),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Text (
-                          "Cadastre-se", 
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 20,),
-                        Text(
-                          "Crie sua conta no Fit Works!",
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Color.fromARGB(255, 142, 130, 130),
-                            ),
-                        ),
-                        SizedBox(height: 30,)
-                      ],
-                    ),
-                    const SizedBox(height: 30),
-
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
-                      child: Column(
-                        children: [
-                          customTextInput(
-                            textLabel: 'Email',
-                            textFieldController: emailController,
-                          ),
-                          const SizedBox(height: 30),
-                          customTextInput(
-                            textLabel: 'Senha',
-                            textFieldController: passwordController,
-                            obscureText: obscureText,
-                            suffixIcon: hideShowIconButton()
-                          ),
-                          const SizedBox(height: 30),
-                          customTextInput(
-                            textLabel: 'Confirmar senha',
-                            textFieldController: confirmPasswordController,
-                            obscureText: obscureText,
-                            suffixIcon: hideShowIconButton()
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-
-                    customMaterialButton(
-                      labelText: 'Cadastre-se',
-                      onPressed: (){
-                        Navigator.of(context).pushReplacementNamed('/home/');
-                      }
-                    ),
-                    const SizedBox(height: 20),
-                    textWithButtonRedirect(
-                      labelTextButton: "Login",
-                      labelTextDescription: "Já possui conta?",
-                      onPressed: () {
-                          Navigator.of(context).pushReplacementNamed('/');
-                      }
-                    ),
+                    _username,
+                    _password,
+                    _confirmPassword,
+                    _signUpButton
                   ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            ]),
         ),
       ),
     );

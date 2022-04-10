@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 
-Widget textWithButtonRedirect({
-  labelTextButton,
-  labelTextDescription = '',
-  onPressed = Null
-}) 
+extension TextWithButtonRedirect on Widget {
+  Widget createTextWithButtonRedirect ({
+    String labelTextButton = '',
+    String labelTextDescription = '',
+    onPressed
+  })
   {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -25,3 +26,4 @@ Widget textWithButtonRedirect({
       ],
     );
   }
+}

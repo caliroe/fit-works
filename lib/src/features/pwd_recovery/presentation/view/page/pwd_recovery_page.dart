@@ -1,15 +1,74 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
+import '../../../../../common/form_text_field.dart';
 
-import '../../../../utils/base_widgets/material_button.dart';
-import '../../../../utils/base_widgets/text_input.dart';
 
-
-class PasswordRecoveryPage extends StatelessWidget {
+class PasswordRecoveryPage extends StatefulWidget {
   const PasswordRecoveryPage({ Key? key }) : super(key: key);
 
   @override
+  State<PasswordRecoveryPage> createState() => _PasswordRecoveryPageState();
+}
+
+
+class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
+
+
+  pageTitle(String labelTextTitle, String labelTextDescription){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Text(
+          labelTextTitle,
+          style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          labelTextDescription,
+          style: const TextStyle(
+              fontSize: 15,
+              color: Color.fromARGB(255, 142, 130, 130),
+          ),
+        )
+      ],
+    );
+  }
+
+
+  Widget get _username => widget.createFormField(
+        textLabel: 'username'.i18n(),
+        theme: ThemeData(),
+        keyboardType: TextInputType.emailAddress,
+        textInputAction: TextInputAction.next,
+        hint: 'username'.i18n(),
+        enabled: true, // !store.isLoading,
+        errorText: '', // store.error.username,
+        onChange: (value) => null // store.username = value,
+  );
+
+  Widget get _recoveryPasswordButton => Container(
+        margin: const EdgeInsets.fromLTRB(30, 15, 30, 5),
+        width: double.infinity,
+        height: 56,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6),
+              ),
+            ),
+          ),
+          onPressed: null,
+          child: Text('send'.i18n()),
+        ),
+  );
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -25,61 +84,23 @@ class PasswordRecoveryPage extends StatelessWidget {
             color: Colors.black)
         ),
       ),
-      body: SafeArea(
+      body: Center(
         child: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    pageTitle('forgot_password'.i18n(), 'redefine_password'.i18n()),
                     const SizedBox(height: 30),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Text (
-                            "Recuperar senha", 
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                            ),
-                        ),
-                        Text(
-                            "Solicite uma nova senha",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Color.fromARGB(255, 142, 130, 130),
-                              ),
-                        ),
-                        SizedBox(height: 30,)
-                      ],
-                    ),
-                    const SizedBox(height: 30),
-
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
-                      child: Column(
-                        children: [
-                          customTextInput(
-                            textLabel: 'Email',
-                            textFieldController: null,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-
-                    customMaterialButton(
-                      labelText: 'Enviar',
-                      onPressed: (){}
-                    ),
+                    _username,
+                    _recoveryPasswordButton
                   ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            ]),
         ),
       ),
     );
