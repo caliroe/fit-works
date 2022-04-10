@@ -76,7 +76,7 @@ class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
         backgroundColor: Colors.white,
         leading: IconButton( 
           onPressed:() {
-              Navigator.of(context).pushReplacementNamed('/');
+              Navigator.of(context).pushReplacementNamed('/login');
           },
         icon: const Icon(
             Icons.arrow_back_ios,
