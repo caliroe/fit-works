@@ -38,4 +38,31 @@ flutter:
     - lib/assets/i18n/
     - lib/assets/images/
 
+  fonts:
+    - family: Fredoka One
+      fonts:
+        - asset: lib/assets/fonts/FredokaOne-Regular.ttf
+
+    - family: Kanit
+      fonts:
+        - asset: lib/assets/fonts/Kanit-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/Kanit-Black.ttf
+          weight: 400
+        - asset: lib/assets/fonts/Kanit-BlackItalic.ttf
+          weight: 400
+          style: italic
+  
+    - family: Ubuntu
+      fonts:
+        - asset: lib/assets/fonts/Ubuntu-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/Ubuntu-Regular.ttf
+          weight: 500
+        - asset: lib/assets/fonts/Ubuntu-Regular.ttf
+          weight: 400
+        - asset: lib/assets/fonts/Ubuntu-BoldItalic.ttf
+          weight: 700
+          style: italic
+
 
