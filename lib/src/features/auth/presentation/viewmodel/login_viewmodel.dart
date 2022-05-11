@@ -44,8 +44,8 @@ abstract class _LoginViewModelBase with Store {
   void login() async {
     error.clear();
 
-    validateUsername();
-    validatePassword();
+    // validateUsername();
+    // validatePassword();
 
     if (!error.hasErrors) {
       isLoading = true;

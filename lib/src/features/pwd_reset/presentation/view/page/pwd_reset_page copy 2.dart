@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import '../../../../../common/form_text_field.dart';
+import '../../viewmodel/solicitation_viewmodel.dart';
 
 
-class PasswordRecoveryPage extends StatefulWidget {
-  const PasswordRecoveryPage({ Key? key }) : super(key: key);
+class PasswordResetPage extends StatefulWidget {
+  const PasswordResetPage({ Key? key }) : super(key: key);
 
   @override
-  State<PasswordRecoveryPage> createState() => _PasswordRecoveryPageState();
+  State<PasswordResetPage> createState() => _PasswordResetPageState();
 }
 
 
-class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
+class _PasswordResetPageState extends ModularState<PasswordResetPage, SolicitationViewModel> {
 
 
   pageTitle(String labelTextTitle, String labelTextDescription){
@@ -61,7 +63,18 @@ class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
               ),
             ),
           ),
-          onPressed: null,
+          onPressed: () {
+              if(!store.isLoading) {
+                store.solicitation();
+                Future.delayed(const Duration(seconds: 5)).then((_) {
+                  if(store.solicitationOk) {
+                    print('solicitação ok');
+                    Navigator.pop(context);
+                    Modular.to.pushNamed('/');    
+                  }
+                });
+              } 
+            },
           child: Text('send'.i18n()),
         ),
   );
@@ -76,7 +89,7 @@ class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
         backgroundColor: Colors.white,
         leading: IconButton( 
           onPressed:() {
-              Navigator.of(context).pushReplacementNamed('/login');
+              Navigator.of(context).pushReplacementNamed('/login/');
           },
         icon: const Icon(
             Icons.arrow_back_ios,

@@ -67,7 +67,7 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: "Continue",
                       press: () {
-                        Navigator.of(context).pushReplacementNamed('/login');
+                        Navigator.of(context).pushReplacementNamed('/login/');
                       },
                     ),
                     Spacer(),

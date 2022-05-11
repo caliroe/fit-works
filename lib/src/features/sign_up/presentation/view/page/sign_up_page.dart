@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:localization/localization.dart';
 import 'package:basearch/src/common/form_text_field.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:localization/localization.dart';
 
+import '../../viewmodel/signup_viewmodel.dart';
 
 
 class SignUpPage extends StatefulWidget {
@@ -12,7 +14,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignUpPageState extends ModularState<SignUpPage, SignUpViewModel> {
   bool obscureText = true;
 
 
@@ -51,15 +53,37 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  Widget get _name => widget.createFormField(
+        textLabel: 'name'.i18n(),
+        theme: ThemeData(),
+        keyboardType: TextInputType.name,
+        textInputAction: TextInputAction.next,
+        hint: 'name'.i18n(),
+        enabled: !store.isLoading,
+        errorText: null, //store.error.name,
+        onChange: (value) => store.name = value,
+      );
+  
+  Widget get _fullname => widget.createFormField(
+        textLabel: 'fullname'.i18n(),
+        theme: ThemeData(),
+        keyboardType: TextInputType.name,
+        textInputAction: TextInputAction.next,
+        hint: 'fullname'.i18n(),
+        enabled: !store.isLoading,
+        errorText: null, //store.error.fullName,
+        onChange: (value) => store.fullName = value,
+      );
+  
   Widget get _username => widget.createFormField(
         textLabel: 'username'.i18n(),
         theme: ThemeData(),
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
         hint: 'username'.i18n(),
-        enabled: true, // !store.isLoading,
-        errorText: '', // store.error.username,
-        onChange: (value) => null // store.username = value,
+        enabled: !store.isLoading,
+        errorText: store.error.username,
+        onChange: (value) => store.username = value,
       );
 
   Widget get _password => widget.createFormField(
@@ -68,9 +92,9 @@ class _SignUpPageState extends State<SignUpPage> {
         keyboardType: TextInputType.text,
         obscureText: obscureText,
         hint: 'password'.i18n(),
-        enabled: true, // !store.isLoading,
-        errorText: '', // store.error.password,
-        onChange: (value) => null, // store.password = value,
+        enabled: !store.isLoading,
+        errorText: store.error.password,
+        onChange: (value) => store.password = value,
         suffixIcon: hideShowIconButton()
       );
   
@@ -80,9 +104,9 @@ class _SignUpPageState extends State<SignUpPage> {
         keyboardType: TextInputType.text,
         obscureText: obscureText,
         hint: 'password_comfirm'.i18n(),
-        enabled: true, // !store.isLoading,
-        errorText: '', // store.error.password,
-        onChange: (value) => null, // store.password = value,
+        enabled: !store.isLoading,
+        errorText: store.error.password,
+        onChange: (value) => store.password = value,
         suffixIcon: hideShowIconButton()
       );
   
@@ -98,7 +122,18 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
           ),
-          onPressed: null,
+          onPressed: () {
+              if(!store.isLoading) {
+                store.createAccount();
+                Future.delayed(const Duration(seconds: 5)).then((_) {
+                  if(store.isCreated) {
+                    print('created ok');
+                    Navigator.pop(context);
+                    Modular.to.pushNamed('/sign-up/create-account-confirm/');    
+                  }
+                });
+              } 
+            },
           child: Text('sign_up'.i18n()),
         ),
       );
@@ -114,7 +149,7 @@ class _SignUpPageState extends State<SignUpPage> {
         backgroundColor: Colors.white,
         leading: IconButton( 
           onPressed:() {
-              Navigator.of(context).pushReplacementNamed('/login');
+              Navigator.of(context).pushReplacementNamed('/login/');
           },
         icon: const Icon(
             Icons.arrow_back_ios,
@@ -133,6 +168,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   children: [
                     pageTitle('sign_up'.i18n(), 'create_account'.i18n()),
                     const SizedBox(height: 30),
+                    _name,
+                    _fullname,
                     _username,
                     _password,
                     _confirmPassword,

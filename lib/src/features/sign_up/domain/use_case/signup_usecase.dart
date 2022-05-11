@@ -1,12 +1,12 @@
-import 'package:basearch/src/features/auth/data/repository/login_repository.dart';
+import 'package:basearch/src/features/sign_up/data/repository/signup_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:localization/localization.dart';
 
-import '../model/user.dart';
+import '../model/signup_data.dart';
 
 
-class LoginUseCase {
-  final repository = Modular.get<LoginRepository>();
+class SignUpUseCase {
+  final repository = Modular.get<SignUpRepository>();
 
   
   String? validateUsername(String username) { 
@@ -18,20 +18,36 @@ class LoginUseCase {
     return null;
   }  
 
-  String? validatePassword(String password) {
+  String? validatePassword(String password, String passwordConfim) {
     if (password.isEmpty) {
       return 'password_required'.i18n();
     } else if (isPasswordStrong(password) != true) {
       return 'password_must_be_strong'.i18n();
     } else if (isPasswordLenghtAcceptable(password) != true) {
       return 'password_invalid_lengh'.i18n();
+    } else if (isPasswordConfirm(password, passwordConfim) != true) {
+      return 'password_confirm_lengh'.i18n();
     }
     return null;
   }
 
 
-  Future<User> login(String username, String password) async {
-     return repository.login(User(username, password));
+  Future<SignUpUser> signUp(
+    String name, 
+    String fullName, 
+    String username, 
+    String password,
+    String passwordConfirm
+  ) async {
+    return repository.signUp(
+       SignUpUser(
+          name,
+          fullName,
+          username, 
+          password,
+          passwordConfirm,
+      )
+    );
   }
 }
 
@@ -51,4 +67,8 @@ bool isPasswordStrong(String password) {
 
 bool isPasswordLenghtAcceptable(String password) {
   return password.length >= 6 && password.length <= 12;
+}
+
+bool isPasswordConfirm(String password, String passwordConfirm) {
+  return password == passwordConfirm;
 }

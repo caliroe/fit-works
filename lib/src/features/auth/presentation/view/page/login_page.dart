@@ -145,7 +145,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginViewModel> {
   Widget get _forgotPassword => widget.createTextWithButtonRedirect(
         labelTextButton: "forgot_password".i18n(),
         onPressed: () {
-            Modular.to.pushNamed('/pwd-recovery/');
+            Modular.to.pushNamed('/pwd-reset/');
         }
   );
 
