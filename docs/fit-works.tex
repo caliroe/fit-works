@@ -1,0 +1,103 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+
+\begin{document}
+
+\title{Fit Works}
+
+\author{\IEEEauthorblockN{ Pietro Nazar }
+\IEEEauthorblockA{\textit{Graduando em Ciência da Computação} \\
+\textit{Centro Universitário IESB}\\
+Brasília, DF\\}
+
+\and
+\IEEEauthorblockN{\textsuperscript\\{\\} Gabriel Assunção de Oliveira}
+\IEEEauthorblockA{\textit{Graduando em Engenharia da Computação} \\
+\textit{Centro Universitário IESB}\\
+Brasília, DF\\\\gabriel.assuncao@iesb.edu.br}
+
+\and
+\IEEEauthorblockN{\textsuperscript\\{\\} Daniella Téu}
+\IEEEauthorblockA{\textit{Graduando em Ciência da Computação} \\
+\textit{Centro Universitário IESB}\\
+Brasília, DF\\}
+
+}
+
+\maketitle
+
+
+\begin{resumo}
+\textbf{{\textit{Resumo}}--Este artigo irá abordar o desenvolvimento de nossa aplicação que tem por objetivo auxiliar o usuário a se exercitar com o auxílio de instruções personalizadas do aplicativo, cuja informações coletadas no início serão repassadas a um profissional que irá definir os exercícios e alimentar uma inteligência artificial }
+\end{resumo}
+
+
+\begin{IEEEkeywords}
+Palavras-chave: Fake news, Notícias falsas, Inteligência artificial, Machine learning.
+\end{IEEEkeywords}
+
+\section{Introdução}
+
+A pandemia veio e fez com que medidas que alteram a rotina de todo mundo fossem tomadas, a mais marcante foi o isolamento em casa. Pessoas que antes saiam de casa, tinham atividades que faziam com que se movimentasse e espaços públicos para realização de atividades, se encontram “presas” em casa, tendo que realizar todas as suas atividades de trabalho e lazer dentro de um espaço delimitado. O preço disso foi um aumento do sedentarismo. Os ossos, músculos e articulações, por causa da baixa mobilidade, perderam resistência. Segundo o Google Trends, o termo “dor nas costas” teve crescimento de 76% desde o início do novo coronavírus no país. Quase seis em cada dez brasileiros (57,25%) estavam com sobrepeso em 2021. Uma vida sedentária leva a pessoa a um maior risco de ter um acidente vascular cerebral (AVC), insuficiência renal crônica, cardiopatia e até problemas de visão. O sedentarismo também é muito associado à diabetes e à obesidade, aumentando os riscos de doenças cardiovasculares. Diante desses perigos, muitas pessoas foram buscar na tecnologia, em especial nos aplicativos, opções de sair dessa condição.
+
+\section{Contexto}
+
+Com todas as consequências causadas pelo isolamento, veio a necessidade de se realizar exercícios em casa para uma vida saudável. Mas como fazer?
+
+Muitos profissionais e grandes marcas utilizam aplicativos, com abordagens diferentes. O foco das empresas (como Nike e Adidas, dois grandes aplicativos gratuitos disponibilizados em português) era num conteúdo “faça você mesmo” com exercícios simples, com vídeos e figuras orientando a melhor maneira de realizar, com poucos ou nenhum equipamento e utilizando objetos e o espaço da casa, baseados em informações simples que os usuários poderiam facilmente informar ao começar a utilizar o aplicativo. Já os profissionais se utilizam de sua especialidade para oferecer um acompanhamento mais específico às necessidades do usuário, se utilizando de dados mais completos e personalizando os exercícios e atividades que poderiam ser realizadas dentro de casa.
+
+
+\section{Problema}
+Com base no artigo “efetividade de aplicativos móveis para mudanças comportamentais em saúde: revisão sistemática”, vimos que os aplicativos são efetivos na construção de uma rotina e hábitos saudáveis do usuário (levando em conta contextos sociais/políticos específicos), entretanto sua precisão fica comprometida pela ineficiência de juntar a agilidade de soluções tecnológicas com o conhecimento de profissionais da área.
+
+
+\section{Objetivo Geral}\label{AA}
+O objetivo é criar uma aplicação que inicialmente tenha uma input com os dados básicos do usuário e em seguida demonstra exercícios básicos e simples que podem ser implementados no dia a dia dele. Logo após isso, um profissional o acompanhará pelo aplicativo e irá definir as melhores rotinas e atividades para o usuário com vista de alcançar o objetivo de próprio. Em paralelo a tudo isso, um algoritmo de Inteligência Artificial irá aprender com o profissional para que possa entregar cada vez melhor os exercícios do usuário logo após o cadastro realizado.
+
+\section{Objetivo Específico}
+
+* Tela inicial: Login ou cadastro (aluno e professor)
+* Professor: Acesso administrador e ao perfil dos clientes
+* Professor: Tela home, na qual é possível selecionar alunos, incluir treinos, planos de exercícios e fazer as alterações desejadas
+* Professor: Alunos, tela na qual o profissional seleciona o aluno para acompanhamento
+* Professor: Agenda, para controle e marcação de horários
+* Professor: Financeiro, para acompanhamento de pagamentos.
+* Aluno: Primeiro acesso, campo para informações básicas (nome, telefone, data de nascimento e endereço), informações de saúde acessíveis a qualquer leigo (peso e altura)
+* Aluno: Numa lógica básica e genérica (posteriormente alimentada por IA com tentativa e erro validada por um profissional) é ofertada ao usuário treinos iniciais antes do contato de um profissional
+* Aluno: Tela home, na qual o usuário pode navegar entre as opções do app (Perfil, treino, progresso, financeiro, avaliação, arquivos)
+* Aluno: Progresso, acompanhamento com um profissional do progresso alcançado com as práticas do exercício
+* Aluno: Financeiro, para consultas de extrato de pagamento
+* Aluno: Avaliação, para acompanhamento de metas, contatos e feedbacks
+* Aluno: Arquivos, para material (PDF, DOC, etc) disponibilizados pelo profissional ao aluno.
+
+
+\section{Referencial Teórico}
+
+\begin{itemize}
+\item [1] Martins, André. Pandemia eleva índice de sedentarismo entre a população brasileira. Disponível em: (https://exame.com/bussola/pandemia-eleva-indice-de-sedentarismo-entre-a-populacao-brasileira/). Acesso em: 07/04/2022.
+
+\end{itemize}
+
+\begin{itemize}
+\item [2] Welter Ritter ,Eduardo; Rigo, Sandro José. FITDATA: Um sistema para monitoramento de atividade física baseado em dispositivos móveis. Pós-Graduação em Computação Aplicada.  XII Brazilian Symposium on Information Systems, Florianópolis, SC, May 17-20, 2016.
+\end{itemize}
+
+\begin{itemize}
+\item [3] Paula TR, Menezes AP, Guedes NG, Silva VM, Cardoso MVLML, Ramos ES. Effectiveness of mobile applications for behavioral changes in
+health: a systematic review (Efetividade de aplicativos móveis para mudanças comportamentais em saúde: revisão sistemática). 
+\newline
+\end{itemize}
+
+
+\section{Trabalhos Correlatos}
+
+Com base no artigo “Efetividade de aplicativos móveis para mudanças comportamentais em saúde: revisão sistemática", queremos melhorar a precisão dos app de exercício de maneira que a IA e o instrutor humano possam trabalhar em conjunto, aumentando o grau de efetividade.
+
+\end{document}
