@@ -7,6 +7,7 @@ import '../pwd_reset/domain/repository/pwd_reset_interface.dart';
 import '../pwd_reset/domain/use_case/confirm_usecase.dart';
 import '../pwd_reset/domain/use_case/pwd_reset_usecase.dart';
 import '../pwd_reset/domain/use_case/solicitation_usecase.dart';
+import 'presentation/view/page/verification_page.dart';
 import 'presentation/viewmodel/solicitation_viewmodel.dart';
 
 
@@ -26,5 +27,6 @@ class PasswordRecoveryModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (_, __) => const PasswordResetPage(), children: []),
+        ChildRoute('/recovery-verification/', child: (_, __) => const VerificationtPage(), children: []),
       ];
 }

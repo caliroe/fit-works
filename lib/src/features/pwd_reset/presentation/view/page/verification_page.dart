@@ -5,15 +5,15 @@ import '../../../../../common/form_text_field.dart';
 import '../../viewmodel/solicitation_viewmodel.dart';
 
 
-class PasswordResetPage extends StatefulWidget {
-  const PasswordResetPage({ Key? key }) : super(key: key);
+class VerificationtPage extends StatefulWidget {
+  const VerificationtPage({ Key? key }) : super(key: key);
 
   @override
-  State<PasswordResetPage> createState() => _PasswordResetPageState();
+  State<VerificationtPage> createState() => _VerificationtPagePageState();
 }
 
 
-class _PasswordResetPageState extends ModularState<PasswordResetPage, SolicitationViewModel> {
+class _VerificationtPagePageState extends ModularState<VerificationtPage, SolicitationViewModel> {
 
   pageTitle(String labelTextTitle, String labelTextDescription){
     return Column(
@@ -76,32 +76,10 @@ class _PasswordResetPageState extends ModularState<PasswordResetPage, Solicitati
                 });
               } 
             },
-          child: Text('send'.i18n()),
+          child: Text('i_have_code_verification'.i18n()),
         ),
   );
 
-
-  Widget get _recoveryCodedButton => Container(
-        margin: const EdgeInsets.fromLTRB(30, 15, 30, 5),
-        width: double.infinity,
-        height: 56,
-        child: ElevatedButton(
-          style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-              ),
-            ),
-          ),
-          onPressed: () {
-              if(!store.isLoading) {
-                  Navigator.pop(context);
-                  Modular.to.pushNamed('/recovery-verification/');  
-              } 
-            },
-          child: Text('send'.i18n()),
-        ),
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +91,7 @@ class _PasswordResetPageState extends ModularState<PasswordResetPage, Solicitati
         backgroundColor: Colors.white,
         leading: IconButton( 
           onPressed:() {
-              Navigator.of(context).pushReplacementNamed('/login/');
+              Navigator.of(context).pushReplacementNamed('/');
           },
         icon: const Icon(
             Icons.arrow_back_ios,
@@ -134,7 +112,6 @@ class _PasswordResetPageState extends ModularState<PasswordResetPage, Solicitati
                     const SizedBox(height: 30),
                     _username,
                     _recoveryPasswordButton,
-                    _recoveryCodedButton
                   ],
                 ),
               ),
