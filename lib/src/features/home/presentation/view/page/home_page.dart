@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../widget/home_body.dart';
+import '../../../../../common/enums.dart';
+import '../../../../../common/coustom_bottom_nav_bar.dart';
+
 
 
 class HomePage extends StatelessWidget {
@@ -7,20 +11,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        color: Colors.blueGrey[50],
-        child: Center(
-          child: Text(
-            'Home Page',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline2,
-          ),
-        ),
-      ),
+    return const Scaffold(
+      body: HomeBody(),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
     );
   }
 }
